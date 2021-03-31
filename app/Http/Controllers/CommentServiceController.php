@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CommentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CommentServiceController extends Controller
 {
@@ -14,7 +15,7 @@ class CommentServiceController extends Controller
      */
     public function index()
     {
-        $comments = City::all();
+        $comments = CommentService::all();
 
         return $this->successResponse($comments);
     }
@@ -37,7 +38,20 @@ class CommentServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $fields = $request->all();
+        $rules = [
+            'image' => 'required',
+            'service_id' => 'required',
+        ];
+        $this->validate($request, $rules);
+        $fields = $request->except(['image']);
+        $image = $request->image;
+        $file_data = $image["imagen"];
+        $file_name = 'service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+        if ($file_data != "") { // storing image in storage/app/public Folder
+            Storage::disk('public')->put($file_name, base64_decode($file_data));
+            $fields['photo'] = $file_name;
+        }
         $comment = CommentService::create($fields);
 
         return $this->successResponse($comment);
@@ -74,7 +88,19 @@ class CommentServiceController extends Controller
      */
     public function update(Request $request, CommentService $commentService)
     {
-        $commentService->fill($request->all());
+        $commentService->fill($request->except(['image']));
+
+        if ($request->image != null) {
+            $image = $request->image;
+            $file_data = $image["imagen"];
+            $file_name = 'service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
+                Storage::disk('public')->delete(explode('storage/',$commentService->photo)[1]);
+                $commentService->photo = $file_name;
+            }
+        }
 
         if($commentService->isClean()){
             return response()->json("No se hicieron cambios",422);
@@ -94,6 +120,7 @@ class CommentServiceController extends Controller
     public function destroy(CommentService $commentService)
     {
         $commentService->delete();
+        Storage::disk('public')->delete(explode('storage/',$commentService->image)[1]);
         return $this->successResponse($commentService);
     }
 }

@@ -19,6 +19,11 @@ class Room extends Model
         'type_room_id',
     ];
 
+    public function getPhotoAttribute($valor)
+    {
+        return url('storage/'.$valor);
+    }
+
     public function typeRoom(){
         return $this->belongsTo(TypeRoom::class);
     }

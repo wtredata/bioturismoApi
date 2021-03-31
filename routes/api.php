@@ -14,6 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+}); */
+
+
+Route::resource('albumRoom', 'AlbumRoomController');
+Route::resource('albumService', 'AlbumServiceController');
+Route::resource('city', 'CityController');
+Route::resource('commentService', 'CommentServiceController');
+Route::resource('group', 'GroupController');
+Route::resource('partner', 'PartnerController');
+Route::resource('room', 'RoomController');
+Route::resource('sale', 'SaleController');
+Route::resource('service', 'ServiceController');
+Route::resource('state', 'StateController');
+Route::resource('stateSale', 'StateSaleController');
+Route::resource('typeRoom', 'TypeRoomController');
+Route::resource('typeService', 'TypeServiceController');

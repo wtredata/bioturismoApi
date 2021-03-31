@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AlbumService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AlbumServiceController extends Controller
 {
@@ -37,7 +38,20 @@ class AlbumServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $fields = $request->all();
+        $rules = [
+            'image' => 'required',
+            'service_id' => 'required',
+        ];
+        $this->validate($request, $rules);
+        $fields = $request->except(['image']);
+        $image = $request->image;
+        $file_data = $image["imagen"];
+        $file_name = 'service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+        if ($file_data != "") { // storing image in storage/app/public Folder
+            Storage::disk('public')->put($file_name, base64_decode($file_data));
+            $fields['photo'] = $file_name;
+        }
         $album = AlbumService::create($fields);
 
         return $this->successResponse($album);
@@ -74,7 +88,19 @@ class AlbumServiceController extends Controller
      */
     public function update(Request $request, AlbumService $albumService)
     {
-        $albumService->fill($request->all());
+        $albumService->fill($request->except(['image']));
+
+        if ($request->image != null) {
+            $image = $request->image;
+            $file_data = $image["imagen"];
+            $file_name = 'product/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
+                Storage::disk('public')->delete(explode('storage/',$albumService->photo)[1]);
+                $albumService->photo = $file_name;
+            }
+        }
 
         if($albumService->isClean()){
             return response()->json("No se hicieron cambios",422);
@@ -94,6 +120,7 @@ class AlbumServiceController extends Controller
     public function destroy(AlbumService $albumService)
     {
         $albumService->delete();
+        Storage::disk('public')->delete(explode('storage/',$albumService->image)[1]);
         return $this->successResponse($albumService);
     }
 }

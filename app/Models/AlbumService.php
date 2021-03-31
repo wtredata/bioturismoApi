@@ -16,6 +16,11 @@ class AlbumService extends Model
         'service_id',
     ];
 
+    public function getPhotoAttribute($valor)
+    {
+        return url('storage/'.$valor);
+    }
+
     public function service(){
         return $this->belongsTo(Service::class);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
@@ -44,7 +45,18 @@ class RoomController extends Controller
         ];
         $this->validate($request, $rules);
 
-        $fields = $request->all();
+        $fields = $request->except(['image']);
+
+        if ($request->image != null) {
+            $image = $request->image;
+            $file_data = $image["imagen"];
+            $file_name = 'room/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
+                $fields['photo'] = $file_name;
+            }
+        }
         $room = Room::create($fields);
 
         return $this->successResponse($room);
@@ -81,7 +93,19 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        $room->fill($request->all());
+        $room->fill($request->except(['image']));
+
+        if ($request->image != null) {
+            $image = $request->image;
+            $file_data = $image["imagen"];
+            $file_name = 'room/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
+                Storage::disk('public')->delete(explode('storage/',$room->photo)[1]);
+                $room->photo = $file_name;
+            }
+        }
 
         if($room->isClean()){
             return response()->json("No se hicieron cambios",422);
@@ -101,6 +125,7 @@ class RoomController extends Controller
     public function destroy(Room $room)
     {
         $room->delete();
+        Storage::disk('public')->delete(explode('storage/',$room->image)[1]);
         return $this->successResponse($room);
     }
 }

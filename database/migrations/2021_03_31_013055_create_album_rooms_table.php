@@ -15,7 +15,7 @@ class CreateAlbumRoomsTable extends Migration
     {
         Schema::create('album_rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('photo')->nullable();
+            $table->string('photo');
             $table->string('description')->nullable();
             $table->unsignedBigInteger("room_id");
             $table->timestamps();

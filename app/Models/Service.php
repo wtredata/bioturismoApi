@@ -16,10 +16,14 @@ class Service extends Model
         'active',
         'price',
         'photo',
-
         'partner_id',
         'type_service_id',
     ];
+
+    public function getPhotoAttribute($valor)
+    {
+        return url('storage/'.$valor);
+    }
 
     public function typeService(){
         return $this->belongsTo(TypeService::class);
