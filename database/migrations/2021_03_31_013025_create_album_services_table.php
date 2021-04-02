@@ -16,7 +16,7 @@ class CreateAlbumServicesTable extends Migration
         Schema::create('album_services', function (Blueprint $table) {
             $table->id();
             $table->string('photo');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->unsignedBigInteger("service_id");
             $table->timestamps();
 

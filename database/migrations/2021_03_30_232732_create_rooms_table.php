@@ -17,13 +17,15 @@ class CreateRoomsTable extends Migration
             $table->id();
             $table->string("name");
             $table->string('photo')->nullable();
-            $table->string("description")->nullable();
+            $table->text("description")->nullable();
             $table->boolean("active")->default(true);
             $table->double("price");
             $table->unsignedBigInteger("type_room_id");
+            $table->unsignedBigInteger("partner_id");
             $table->timestamps();
 
             $table->foreign("type_room_id")->references("id")->on("type_rooms");
+            $table->foreign("partner_id")->references("id")->on("partners");
         });
     }
 

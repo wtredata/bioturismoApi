@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\TypeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CityController extends Controller
 {
@@ -39,11 +41,20 @@ class CityController extends Controller
     {
         $rules = [
             'name' => 'required',
+            'image' => 'required',
             'department_id' => 'required',
         ];
         $this->validate($request, $rules);
+        $fields = $request->except(['image']);
+        $image = $request->image;
+        $file_data = $image["imagen"];
+        $file_name = 'city/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
 
-        $fields = $request->all();
+        if ($file_data != "") { // storing image in storage/app/public Folder
+            Storage::disk('public')->put($file_name, base64_decode($file_data));
+            $fields['photo'] = $file_name;
+        }
+
         $city = City::create($fields);
 
         return $this->successResponse($city);
@@ -80,8 +91,19 @@ class CityController extends Controller
      */
     public function update(Request $request, City $city)
     {
-        $city->fill($request->all());
+        $city->fill($request->except(['image']));
 
+        if ($request->image != null) {
+            $image = $request->image;
+            $file_data = $image["imagen"];
+            $file_name = 'city/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
+                Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
+                $city->photo = $file_name;
+            }
+        }
         if($city->isClean()){
             return response()->json("No se hicieron cambios",422);
         }
@@ -100,6 +122,27 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         $city->delete();
+        Storage::disk('public')->delete(explode('storage/',$city->image)[1]);
+        return $this->successResponse($city);
+    }
+
+    /**
+     * Cities by a type of service
+     * $type: type of service
+     * @return \Illuminate\Http\Response
+     */
+    public function city_type(TypeService $type)
+    {
+        $city=City::whereIn('id', function($query) use($type){
+            $query->select('city_id')
+                ->from('partners')
+                ->whereIn('id', function($query) use($type){
+                    $query->select('partner_id')
+                        ->from('services')
+                        ->where('type_service_id', $type->id);
+                    });
+            })->get();
+
         return $this->successResponse($city);
     }
 }

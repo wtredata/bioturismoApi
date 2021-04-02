@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TypeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TypeServiceController extends Controller
 {
@@ -38,9 +39,19 @@ class TypeServiceController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'image' => 'required',
             'name' => 'required',
         ];
         $this->validate($request, $rules);
+        $fields = $request->except(['image']);
+        $image = $request->image;
+        $file_data = $image["imagen"];
+        $file_name = 'type_service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+        if ($file_data != "") { // storing image in storage/app/public Folder
+            Storage::disk('public')->put($file_name, base64_decode($file_data));
+            $fields['photo'] = $file_name;
+        }
 
         $fields = $request->all();
         $typeService = TypeService::create($fields);
@@ -79,7 +90,19 @@ class TypeServiceController extends Controller
      */
     public function update(Request $request, TypeService $typeService)
     {
-        $typeService->fill($request->all());
+        $typeService->fill($request->except(['image']));
+
+        if ($request->image != null) {
+            $image = $request->image;
+            $file_data = $image["imagen"];
+            $file_name = 'type_service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
+                Storage::disk('public')->delete(explode('storage/',$typeService->photo)[1]);
+                $typeService->photo = $file_name;
+            }
+        }
 
         if($typeService->isClean()){
             return response()->json("No se hicieron cambios",422);
@@ -99,6 +122,7 @@ class TypeServiceController extends Controller
     public function destroy(TypeService $typeService)
     {
         $typeService->delete();
+        Storage::disk('public')->delete(explode('storage/',$typeService->image)[1]);
         return $this->successResponse($typeService);
     }
 }
