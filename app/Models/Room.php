@@ -17,6 +17,7 @@ class Room extends Model
         'active',
         'price',
         'type_room_id',
+        'partner_id',
     ];
 
     public function getPhotoAttribute($valor)
@@ -28,11 +29,16 @@ class Room extends Model
         return $this->belongsTo(TypeRoom::class);
     }
 
+    public function partner(){
+        return $this->belongsTo(Partner::class);
+    }
+
     public function services(){
         return $this->belongsToMany(Service::class);
     }
 
-    public function albums(){
+    public function albums()
+    {
         return $this->hasMany(AlbumRoom::class);
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,16 +20,23 @@ use Illuminate\Support\Facades\Route;
 }); */
 
 
-Route::resource('albumRoom', 'AlbumRoomController');
-Route::resource('albumService', 'AlbumServiceController');
-Route::resource('city', 'CityController');
-Route::resource('commentService', 'CommentServiceController');
-Route::resource('group', 'GroupController');
-Route::resource('partner', 'PartnerController');
-Route::resource('room', 'RoomController');
-Route::resource('sale', 'SaleController');
-Route::resource('service', 'ServiceController');
-Route::resource('state', 'StateController');
-Route::resource('stateSale', 'StateSaleController');
-Route::resource('typeRoom', 'TypeRoomController');
-Route::resource('typeService', 'TypeServiceController');
+Route::resource('albumRoom', 'App\Http\Controllers\AlbumRoomController');
+Route::resource('albumService', 'App\Http\Controllers\AlbumServiceController');
+Route::resource('city', 'App\Http\Controllers\CityController');
+Route::resource('commentService', 'App\Http\Controllers\CommentServiceController');
+Route::resource('group', 'App\Http\Controllers\GroupController');
+Route::resource('partner', 'App\Http\Controllers\PartnerController');
+Route::resource('room', 'App\Http\Controllers\RoomController');
+Route::resource('sale', 'App\Http\Controllers\SaleController');
+Route::resource('service', 'App\Http\Controllers\ServiceController');
+Route::resource('state', 'App\Http\Controllers\StateController');
+Route::resource('stateSale', 'App\Http\Controllers\StateSaleController');
+Route::resource('typeRoom', 'App\Http\Controllers\TypeRoomController');
+Route::resource('typeService', 'App\Http\Controllers\TypeServiceController');
+
+/*
+ * Custom Routes
+ * */
+
+Route::get('service/type/{type}/city/{city}', 'App\Http\Controllers\ServiceController@service_city_type');
+Route::get('city/type/{type}', 'App\Http\Controllers\CityController@city_type');

@@ -21,7 +21,7 @@ class CreatePartnersTable extends Migration
             $table->string('direction');
             $table->string('neighbor');
             $table->string('email')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('available')->default(true);
             $table->boolean('active')->default(true);
 

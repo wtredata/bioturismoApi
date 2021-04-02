@@ -41,7 +41,6 @@ class SaleController extends Controller
             'date_start' => 'required',
             'date_end' => 'required',
             'state_sale_id' => 'required',
-            'user_id' => 'required',
         ];
         $this->validate($request, $rules);
 

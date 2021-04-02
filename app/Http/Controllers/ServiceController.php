@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Service;
+use App\Models\TypeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -71,6 +73,8 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
+        $service->rooms=$service->rooms;
+        $service->albums=$service->albums;
         return $this->successResponse($service);
     }
 
@@ -129,4 +133,22 @@ class ServiceController extends Controller
         Storage::disk('public')->delete(explode('storage/',$service->image)[1]);
         return $this->successResponse($service);
     }
+
+
+    /**
+     * Services by type of service and city
+     *
+     * $type: type of service
+     * $city: city searched
+     * @return \Illuminate\Http\Response
+     */
+    public function service_city_type(TypeService $type, City $city)
+    {
+        $services = Service::whereHas('partner', function ($item) use($city){
+            $item->where('city_id', $city->id);
+        })->where('type_service_id', $type->id)->get();
+
+        return $this->successResponse($services);
+    }
+
 }

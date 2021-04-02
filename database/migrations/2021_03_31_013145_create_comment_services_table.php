@@ -15,8 +15,8 @@ class CreateCommentServicesTable extends Migration
     {
         Schema::create('comment_services', function (Blueprint $table) {
             $table->id();
-            $table->string('photo');
-            $table->string('description')->nullable();
+            $table->string('photo')->nullable();
+            $table->text('description');
             $table->unsignedBigInteger("service_id");
             $table->timestamps();
 

@@ -14,6 +14,8 @@ class Sale extends Model
         'date_start',
         'date_end',
         'description',
+        'price',
+        'data_client',
         'state_sale_id',
         'user_id',
     ];

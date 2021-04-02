@@ -39,19 +39,24 @@ class CommentServiceController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'image' => 'required',
+            'description' => 'required',
             'service_id' => 'required',
         ];
         $this->validate($request, $rules);
         $fields = $request->except(['image']);
-        $image = $request->image;
-        $file_data = $image["imagen"];
-        $file_name = 'service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
 
-        if ($file_data != "") { // storing image in storage/app/public Folder
-            Storage::disk('public')->put($file_name, base64_decode($file_data));
-            $fields['photo'] = $file_name;
+        if ($request->has('image'))
+        {
+            $image = $request->image;
+            $file_data = $image["imagen"];
+            $file_name = 'service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+
+            if ($file_data != "") { // storing image in storage/app/public Folder
+                Storage::disk('public')->put($file_name, base64_decode($file_data));
+                $fields['photo'] = $file_name;
+            }
         }
+
         $comment = CommentService::create($fields);
 
         return $this->successResponse($comment);

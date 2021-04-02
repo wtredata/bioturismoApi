@@ -12,9 +12,16 @@ class TypeService extends Model
     protected $fillable = [
         'id',
         'name',
+        'photo',
         'description',
         'active',
     ];
+
+    public function getPhotoAttribute($valor)
+    {
+        return url('storage/'.$valor);
+    }
+
 
     public function services(){
         return $this->hasMany(Service::class);

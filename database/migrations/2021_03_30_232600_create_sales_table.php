@@ -17,10 +17,12 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->date("date_start");
             $table->date("date_end");
-            $table->string("description")->nullable();
+            $table->text("description")->nullable();
+            $table->text("data_client")->nullable();
+            $table->double("price")->default(0);
 
             $table->unsignedBigInteger("state_sale_id");
-            $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("user_id")->nullable();
             $table->timestamps();
 
             $table->foreign("state_sale_id")->references("id")->on("state_sales");
