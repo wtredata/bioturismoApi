@@ -31,5 +31,9 @@ class City extends Model
         return $this->hasMany(Partner::class);
     }
 
+    public function forms(){
+        return $this->hasMany(Form::class);
+    }
+
 
 }
