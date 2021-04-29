@@ -42,3 +42,4 @@ Route::resource('form', 'App\Http\Controllers\FormController');
 Route::get('service/type/{type}/city/{city}', 'App\Http\Controllers\ServiceController@service_city_type');
 Route::get('city/type/{type}', 'App\Http\Controllers\CityController@city_type');
 Route::get('stateCity/{state}', 'App\Http\Controllers\StateCityController@index');
+Route::get('typeService/{typeService}/services', 'App\Http\Controllers\ServicesTypeservicesController@index');

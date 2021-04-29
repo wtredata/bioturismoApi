@@ -38,8 +38,8 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'date_start' => 'required',
-            'date_end' => 'required',
+            'date_start' => '',
+            'date_end' => '',
             'state_sale_id' => 'required',
         ];
         $this->validate($request, $rules);
