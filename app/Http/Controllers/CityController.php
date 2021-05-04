@@ -41,20 +41,12 @@ class CityController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'image' => 'required',
+            'photo' => 'required|image',
             'department_id' => 'required',
         ];
         $this->validate($request, $rules);
-        $fields = $request->except(['image']);
-        $image = $request->image;
-        $file_data = $image["imagen"];
-        $file_name = 'city/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
-
-        if ($file_data != "") { // storing image in storage/app/public Folder
-            Storage::disk('public')->put($file_name, base64_decode($file_data));
-            $fields['photo'] = $file_name;
-        }
-
+        $fields = $request->except(['photo']);
+        $fields['photo'] = $request->photo->store('city', 'public');
         $city = City::create($fields);
 
         return $this->successResponse($city);
@@ -91,19 +83,18 @@ class CityController extends Controller
      */
     public function update(Request $request, City $city)
     {
-        $city->fill($request->except(['image']));
+        $rules = [
+            'photo' => 'image',
+        ];
+        $this->validate($request, $rules);
 
-        if ($request->image != null) {
-            $image = $request->image;
-            $file_data = $image["imagen"];
-            $file_name = 'city/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+        $city->fill($request->except(['photo']));
 
-            if ($file_data != "") { // storing image in storage/app/public Folder
-                Storage::disk('public')->put($file_name, base64_decode($file_data));
-                Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
-                $city->photo = $file_name;
-            }
+        if ($request->has('photo')) {
+            $city->photo = $request->photo->store('city', 'public');
+            Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
         }
+
         if($city->isClean()){
             return response()->json("No se hicieron cambios",422);
         }
@@ -122,7 +113,7 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         $city->delete();
-        Storage::disk('public')->delete(explode('storage/',$city->image)[1]);
+        Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
         return $this->successResponse($city);
     }
 

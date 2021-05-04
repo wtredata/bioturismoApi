@@ -39,19 +39,12 @@ class AlbumRoomController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'image' => 'required',
+            'photo' => 'required|image',
             'room_id' => 'required',
         ];
         $this->validate($request, $rules);
-        $fields = $request->except(['image']);
-        $image = $request->image;
-        $file_data = $image["imagen"];
-        $file_name = 'room/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
-
-        if ($file_data != "") { // storing image in storage/app/public Folder
-            Storage::disk('public')->put($file_name, base64_decode($file_data));
-            $fields['photo'] = $file_name;
-        }
+        $fields = $request->except(['photo']);
+        $fields['photo'] = $request->photo->store('album_room', 'public');
 
         $album = AlbumRoom::create($fields);
 
@@ -89,18 +82,15 @@ class AlbumRoomController extends Controller
      */
     public function update(Request $request, AlbumRoom $albumRoom)
     {
-        $albumRoom->fill($request->except(['image']));
+        $rules = [
+            'photo' => 'image',
+        ];
+        $this->validate($request, $rules);
+        $albumRoom->fill($request->except(['photo']));
 
-        if ($request->image != null) {
-            $image = $request->image;
-            $file_data = $image["imagen"];
-            $file_name = 'room/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
-
-            if ($file_data != "") { // storing image in storage/app/public Folder
-                Storage::disk('public')->put($file_name, base64_decode($file_data));
-                Storage::disk('public')->delete(explode('storage/',$albumRoom->photo)[1]);
-                $albumRoom->photo = $file_name;
-            }
+        if ($request->has('photo')) {
+            $albumRoom->photo = $request->photo->store('album_room', 'public');
+            Storage::disk('public')->delete(explode('storage/',$albumRoom->photo)[1]);
         }
 
         if($albumRoom->isClean()){
@@ -121,7 +111,7 @@ class AlbumRoomController extends Controller
     public function destroy(AlbumRoom $albumRoom)
     {
         $albumRoom->delete();
-        Storage::disk('public')->delete(explode('storage/',$albumRoom->image)[1]);
+        Storage::disk('public')->delete(explode('storage/',$albumRoom->photo)[1]);
         return $this->successResponse($albumRoom);
     }
 }
