@@ -24,7 +24,7 @@ insert into sales (date_start,date_end,description,state_sale_id,user_id) values
                   ('2021/03/12', '2021/03/25', 'montaña', 1, 1);
 
 insert into type_services (name,photo,description,active) values
-                            ('Bio Turismo Consciente', 'turismoAventura.jpg', 'Experiencias que te conectan con la vida y la naturaleza', 1),
+                            ('Bio Turismo Aventura', 'turismoAventura.jpg', 'Experiencias que te conectan con la vida y la naturaleza', 1),
                           ('Bio Turismo Científico', 'turismoCientifico.jpg', 'Experiencias conectando la ciencia', 1),
                           ('Bio Turismo Rural', 'turismoRural.jpg', 'Experiencias que conecta el pueblo', 1);
 

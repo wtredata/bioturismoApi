@@ -44,20 +44,14 @@ class ServiceController extends Controller
             'name' => 'required',
             'partner_id' => 'required',
             'type_service_id' => 'required',
+            'photo' => 'image'
         ];
         $this->validate($request, $rules);
 
-        $fields = $request->except(['image']);
+        $fields = $request->except(['photo']);
 
-        if ($request->image != null) {
-            $image = $request->image;
-            $file_data = $image["imagen"];
-            $file_name = 'service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
-
-            if ($file_data != "") { // storing image in storage/app/public Folder
-                Storage::disk('public')->put($file_name, base64_decode($file_data));
-                $fields['photo'] = $file_name;
-            }
+        if ($request->has('photo')) {
+            $fields['photo'] = $request->photo->store('service', 'public');
         }
 
         $service = Service::create($fields);
@@ -98,18 +92,16 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        $service->fill($request->except(['image']));
+        $rules = [
+            'photo' => 'image',
+        ];
+        $this->validate($request, $rules);
 
-        if ($request->image != null) {
-            $image = $request->image;
-            $file_data = $image["imagen"];
-            $file_name = 'service/image_' . time() . '.' . $image["type_image"]; //generating unique file name;
+        $service->fill($request->except(['photo']));
 
-            if ($file_data != "") { // storing image in storage/app/public Folder
-                Storage::disk('public')->put($file_name, base64_decode($file_data));
-                Storage::disk('public')->delete(explode('storage/',$service->photo)[1]);
-                $service->photo = $file_name;
-            }
+        if ($request->has('photo')) {
+            $service->photo = $request->photo->store('service', 'public');
+            Storage::disk('public')->delete(explode('storage/',$service->photo)[1]);
         }
 
         if($service->isClean()){
@@ -130,7 +122,7 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         $service->delete();
-        Storage::disk('public')->delete(explode('storage/',$service->image)[1]);
+        Storage::disk('public')->delete(explode('storage/',$service->photo)[1]);
         return $this->successResponse($service);
     }
 
