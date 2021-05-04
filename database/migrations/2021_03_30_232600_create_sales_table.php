@@ -15,8 +15,8 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->date("date_start");
-            $table->date("date_end");
+            $table->date("date_start")->nullable();
+            $table->date("date_end")->nullable();
             $table->text("description")->nullable();
             $table->text("data_client")->nullable();
             $table->double("price")->default(0);

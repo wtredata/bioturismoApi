@@ -9,7 +9,7 @@ insert into users (code,name,surname,date_birth,phone,direction,active,email,pas
 
 insert into states (name,acronym,active) values ('Norte Santander', 'NS', 1), ('Antioquia', 'AN', 1), ('Cundinamarca', 'CU', 1);
 
-insert into cities (name,photo,acronym,active,state_id) values ('Pamplona', '1.jpg', 'PA', 1, 1), ('Medellin', '1.jpg', 'ME', 1, 2), ('Bogota', '1.jpg', 'BO', 1, 3);
+insert into cities (name,photo,acronym,active,state_id) values ('Pamplona', 'pamplona.jpg', 'PA', 1, 1), ('Medellin', 'medellin.jpg', 'ME', 1, 2), ('Bogota', 'bogota.jpg', 'BO', 1, 3);
 
 insert into partners (name,logo,phone,direction,neighbor,email,description,available,active,user_id,city_id) values
                      ('aliado1', '1.jpg', '2222', 'cr 2', 'centro', 'aliad@t.co', 'gsd', 1, 1, 2, 1),
@@ -24,9 +24,9 @@ insert into sales (date_start,date_end,description,state_sale_id,user_id) values
                   ('2021/03/12', '2021/03/25', 'montaña', 1, 1);
 
 insert into type_services (name,photo,description,active) values
-                          ('Turismo Científico', '1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1),
-                          ('Turismo de Aventura', '1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1),
-                          ('Turismo Rural', '1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1);
+                            ('Bio Turismo Consciente', 'turismoAventura.jpg', 'Experiencias que te conectan con la vida y la naturaleza', 1),
+                          ('Bio Turismo Científico', 'turismoCientifico.jpg', 'Experiencias conectando la ciencia', 1),
+                          ('Bio Turismo Rural', 'turismoRural.jpg', 'Experiencias que conecta el pueblo', 1);
 
 insert into type_rooms (name,description,active) values ('Normal', 'sdfsdfsd', 1), ('Especial', 'jasjsjd', 1);
 
@@ -36,9 +36,9 @@ insert into rooms (name,photo,description,active,price,type_room_id, partner_id)
                   ('103', '1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 70000, 2, 3);
 
 insert into services (name,description,active,price,photo,partner_id,type_service_id) values
-                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, '1.jpg', 1, 1),
-                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, '1.jpg', 2, 2),
-                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, '1.jpg', 3, 3);
+                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 1, 1),
+                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 2, 2),
+                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 3, 3);
 
 insert into sale_service (sale_id,service_id) values
                          (1,1),

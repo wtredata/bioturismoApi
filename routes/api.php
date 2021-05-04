@@ -33,6 +33,7 @@ Route::resource('state', 'App\Http\Controllers\StateController');
 Route::resource('stateSale', 'App\Http\Controllers\StateSaleController');
 Route::resource('typeRoom', 'App\Http\Controllers\TypeRoomController');
 Route::resource('typeService', 'App\Http\Controllers\TypeServiceController');
+Route::resource('form', 'App\Http\Controllers\FormController');
 
 /*
  * Custom Routes
@@ -40,3 +41,5 @@ Route::resource('typeService', 'App\Http\Controllers\TypeServiceController');
 
 Route::get('service/type/{type}/city/{city}', 'App\Http\Controllers\ServiceController@service_city_type');
 Route::get('city/type/{type}', 'App\Http\Controllers\CityController@city_type');
+Route::get('stateCity/{state}', 'App\Http\Controllers\StateCityController@index');
+Route::get('typeService/{typeService}/services', 'App\Http\Controllers\ServicesTypeservicesController@index');

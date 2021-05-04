@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sale;
+use App\Models\Form;
 use Illuminate\Http\Request;
 
-class SaleController extends Controller
+class FormController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::all();
+        $forms = Form::all();
 
-        return $this->successResponse($sales);
+        return $this->successResponse($forms);
     }
 
     /**
@@ -38,36 +38,39 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'date_start' => '',
-            'date_end' => '',
-            'state_sale_id' => 'required',
+            'name' => 'required',
+            'surname' => 'required',
+            'enterprise' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'city_id' => 'required',
         ];
         $this->validate($request, $rules);
 
         $fields = $request->all();
-        $sale = Sale::create($fields);
+        $form = Form::create($fields);
 
-        return $this->successResponse($sale);
+        return $this->successResponse($form);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Sale  $sale
+     * @param  \App\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function show(Sale $sale)
+    public function show(Form $form)
     {
-        return $this->successResponse($sale);
+        return $this->successResponse($form);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Sale  $sale
+     * @param  \App\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sale $sale)
+    public function edit(Form $form)
     {
         //
     }
@@ -76,31 +79,31 @@ class SaleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sale  $sale
+     * @param  \App\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sale $sale)
+    public function update(Request $request, Form $form)
     {
-        $sale->fill($request->all());
+        $form->fill($request->all());
 
-        if($sale->isClean()){
+        if($form->isClean()){
             return response()->json("No se hicieron cambios",422);
         }
 
-        $sale->save();
+        $form->save();
 
-        return $this->successResponse($sale);
+        return $this->successResponse($form);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Sale  $sale
+     * @param  \App\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sale $sale)
+    public function destroy(Form $form)
     {
-        $sale->delete();
-        return $this->successResponse($sale);
+        $form->delete();
+        return $this->successResponse($form);
     }
 }
