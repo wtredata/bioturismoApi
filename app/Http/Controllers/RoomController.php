@@ -96,8 +96,8 @@ class RoomController extends Controller
         $room->fill($request->except(['photo']));
 
         if ($request->has('photo')) {
-            $room->photo = $request->photo->store('room', 'public');
             Storage::disk('public')->delete(explode('storage/',$room->photo)[1]);
+            $room->photo = $request->photo->store('room', 'public');
         }
 
         if($room->isClean()){

@@ -91,8 +91,8 @@ class CityController extends Controller
         $city->fill($request->except(['photo']));
 
         if ($request->has('photo')) {
-            $city->photo = $request->photo->store('city', 'public');
             Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
+            $city->photo = $request->photo->store('city', 'public');
         }
 
         if($city->isClean()){

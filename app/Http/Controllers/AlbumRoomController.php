@@ -89,8 +89,8 @@ class AlbumRoomController extends Controller
         $albumRoom->fill($request->except(['photo']));
 
         if ($request->has('photo')) {
-            $albumRoom->photo = $request->photo->store('album_room', 'public');
             Storage::disk('public')->delete(explode('storage/',$albumRoom->photo)[1]);
+            $albumRoom->photo = $request->photo->store('album_room', 'public');
         }
 
         if($albumRoom->isClean()){
