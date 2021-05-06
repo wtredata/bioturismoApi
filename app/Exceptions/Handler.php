@@ -67,7 +67,7 @@ class Handler extends ExceptionHandler
         // return parent::render($request, $exception);
     }
 
-   /* public function handleException($request, Throwable $exception)
+    public function handleException($request, Throwable $exception)
     {
         if ($exception instanceof ValidationException) {
             return $this->convertValidationExceptionToResponse($exception, $request);
@@ -115,7 +115,7 @@ class Handler extends ExceptionHandler
         }
 
         return $this->errorResponse('Falla inesperada. Intente luego', 500);
-    }*/
+    }
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
     {
