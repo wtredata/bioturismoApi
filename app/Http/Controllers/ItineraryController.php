@@ -39,6 +39,7 @@ class ItineraryController extends Controller
     {
         $rules = [
             'description' => 'required',
+            'service_id' => 'required'
         ];
         $this->validate($request, $rules);
 
