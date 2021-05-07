@@ -89,8 +89,8 @@ class TypeServiceController extends Controller
         $typeService->fill($request->except(['image']));
 
         if ($request->has('photo')) {
-            $typeService->photo = $request->photo->store('type_service', 'public');
             Storage::disk('public')->delete(explode('storage/',$typeService->photo)[1]);
+            $typeService->photo = $request->photo->store('type_service', 'public');
         }
 
         /* if ($request->image != null) {

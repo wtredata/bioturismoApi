@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlbumRoomsTable extends Migration
+class CreateExperiencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateAlbumRoomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('album_rooms', function (Blueprint $table) {
+        Schema::create('experiences', function (Blueprint $table) {
             $table->id();
-            $table->string('photo');
-            $table->text('description')->nullable();
-            $table->unsignedBigInteger("room_id");
+            $table->text("description");
+            $table->boolean("active")->default(true);
+            $table->unsignedBigInteger("service_id");
             $table->timestamps();
-
-            $table->foreign("room_id")->references("id")->on("rooms");
+            $table->foreign("service_id")->references("id")->on("services");
         });
     }
 
@@ -31,6 +30,6 @@ class CreateAlbumRoomsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('album_rooms');
+        Schema::dropIfExists('experiences');
     }
 }

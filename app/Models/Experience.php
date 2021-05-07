@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AlbumRoom extends Model
+class Experience extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'id',
-        'photo',
         'description',
-        'room_id',
+        'active',
+        'service_id',
     ];
 
     public function getPhotoAttribute($valor)
@@ -21,9 +21,7 @@ class AlbumRoom extends Model
         return url('storage/'.$valor);
     }
 
-    public function room(){
-        return $this->belongsTo(Room::class);
+    public function service(){
+        return $this->belongsTo(Service::class);
     }
-
-
 }

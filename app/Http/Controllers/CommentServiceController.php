@@ -94,8 +94,8 @@ class CommentServiceController extends Controller
         $commentService->fill($request->except(['photo']));
 
         if ($request->has('photo')) {
-            $commentService->photo = $request->photo->store('comment', 'public');
             Storage::disk('public')->delete(explode('storage/',$commentService->photo)[1]);
+            $commentService->photo = $request->photo->store('comment', 'public');
         }
 
         if($commentService->isClean()){

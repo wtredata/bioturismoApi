@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TypeRoom extends Model
+class Itinerary extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'id',
-        'name',
         'description',
-        'active',
+        'service_id',
     ];
 
-    public function rooms(){
-        return $this->hasMany(Room::class);
+    public function Service(){
+        return $this->belongsTo(Service::class);
     }
 }

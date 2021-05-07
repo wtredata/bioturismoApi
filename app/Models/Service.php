@@ -15,6 +15,8 @@ class Service extends Model
         'description',
         'active',
         'price',
+        'time',
+        'difficulty',
         'photo',
         'partner_id',
         'type_service_id',
@@ -37,8 +39,8 @@ class Service extends Model
         return $this->belongsToMany(Sale::class);
     }
 
-    public function rooms(){
-        return $this->belongsToMany(Room::class);
+    public function experiences(){
+        return $this->hasMany(Experience::class);
     }
 
     public function albums(){

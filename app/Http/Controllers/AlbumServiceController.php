@@ -87,8 +87,8 @@ class AlbumServiceController extends Controller
         $albumService->fill($request->except(['image']));
 
         if ($request->has('photo')) {
-            $albumService->photo = $request->photo->store('album_service', 'public');
             Storage::disk('public')->delete(explode('storage/',$albumService->photo)[1]);
+            $albumService->photo = $request->photo->store('album_service', 'public');
         }
 
 

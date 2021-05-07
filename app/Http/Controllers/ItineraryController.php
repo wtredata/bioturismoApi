@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TypeRoom;
+use App\Models\Itinerary;
 use Illuminate\Http\Request;
 
-class TypeRoomController extends Controller
+class ItineraryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class TypeRoomController extends Controller
      */
     public function index()
     {
-        $typeRooms = TypeRoom::all();
+        $itineraries = Itinerary::all();
 
-        return $this->successResponse($typeRooms);
+        return $this->successResponse($itineraries);
     }
 
     /**
@@ -38,34 +38,34 @@ class TypeRoomController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required',
+            'description' => 'required',
         ];
         $this->validate($request, $rules);
 
         $fields = $request->all();
-        $typeRoom = TypeRoom::create($fields);
+        $itinerary = Itinerary::create($fields);
 
-        return $this->successResponse($typeRoom);
+        return $this->successResponse($itinerary);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Itinerary  $itinerary
      * @return \Illuminate\Http\Response
      */
-    public function show(TypeRoom $typeRoom)
+    public function show(Itinerary $itinerary)
     {
-        return $this->successResponse($typeRoom);
+        return $this->successResponse($itinerary);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Itinerary  $itinerary
      * @return \Illuminate\Http\Response
      */
-    public function edit(TypeRoom $typeRoom)
+    public function edit(Itinerary $itinerary)
     {
         //
     }
@@ -74,31 +74,31 @@ class TypeRoomController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Itinerary  $itinerary
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TypeRoom $typeRoom)
+    public function update(Request $request, Itinerary $itinerary)
     {
-        $typeRoom->fill($request->all());
+        $itinerary->fill($request->all());
 
-        if($typeRoom->isClean()){
+        if($itinerary->isClean()){
             return response()->json("No se hicieron cambios",422);
         }
 
-        $typeRoom->save();
+        $itinerary->save();
 
-        return $this->successResponse($typeRoom);
+        return $this->successResponse($itinerary);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Itinerary  $itinerary
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeRoom $typeRoom)
+    public function destroy(Itinerary $itinerary)
     {
-        $typeRoom->delete();
-        return $this->successResponse($typeRoom);
+        $itinerary->delete();
+        return $this->successResponse($itinerary);
     }
 }

@@ -67,7 +67,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        $service->rooms=$service->rooms;
+        $service->experiences=$service->experiences;
         $service->albums=$service->albums;
         return $this->successResponse($service);
     }
@@ -100,8 +100,8 @@ class ServiceController extends Controller
         $service->fill($request->except(['photo']));
 
         if ($request->has('photo')) {
-            $service->photo = $request->photo->store('service', 'public');
             Storage::disk('public')->delete(explode('storage/',$service->photo)[1]);
+            $service->photo = $request->photo->store('service', 'public');
         }
 
         if($service->isClean()){

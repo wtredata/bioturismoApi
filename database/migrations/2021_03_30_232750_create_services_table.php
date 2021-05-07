@@ -18,7 +18,9 @@ class CreateServicesTable extends Migration
             $table->string("name");
             $table->text("description")->nullable();
             $table->boolean("active")->default(true);
-            $table->double("price")->default(0);;
+            $table->double("price")->default(0);
+            $table->string("time")->nullable();
+            $table->integer("difficulty")->nullable();
             $table->string('photo')->nullable();
 
             $table->unsignedBigInteger("partner_id");
