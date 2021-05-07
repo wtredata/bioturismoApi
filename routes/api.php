@@ -20,20 +20,19 @@ use App\Http\Controllers;
 }); */
 
 
-Route::resource('albumRoom', 'App\Http\Controllers\AlbumRoomController');
 Route::resource('albumService', 'App\Http\Controllers\AlbumServiceController');
 Route::resource('city', 'App\Http\Controllers\CityController');
 Route::resource('commentService', 'App\Http\Controllers\CommentServiceController');
 Route::resource('group', 'App\Http\Controllers\GroupController');
 Route::resource('partner', 'App\Http\Controllers\PartnerController');
-Route::resource('room', 'App\Http\Controllers\RoomController');
+Route::resource('experience', 'App\Http\Controllers\ExperienceController');
 Route::resource('sale', 'App\Http\Controllers\SaleController');
 Route::resource('service', 'App\Http\Controllers\ServiceController');
 Route::resource('state', 'App\Http\Controllers\StateController');
 Route::resource('stateSale', 'App\Http\Controllers\StateSaleController');
-Route::resource('typeRoom', 'App\Http\Controllers\TypeRoomController');
 Route::resource('typeService', 'App\Http\Controllers\TypeServiceController');
 Route::resource('form', 'App\Http\Controllers\FormController');
+Route::resource('itinerary', 'App\Http\Controllers\ItineraryController');
 
 /*
  * Custom Routes

@@ -15,6 +15,8 @@ class Service extends Model
         'description',
         'active',
         'price',
+        'time',
+        'difficulty',
         'photo',
         'partner_id',
         'type_service_id',
