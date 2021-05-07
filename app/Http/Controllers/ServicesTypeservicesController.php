@@ -9,7 +9,7 @@ class ServicesTypeservicesController extends Controller
 {
     public function index(TypeService $typeService)
     {
-        $services = $typeService->services;
+        $services = $typeService->services()->with('partner.city')->get();
 
         return $this->successResponse($services);
     }
