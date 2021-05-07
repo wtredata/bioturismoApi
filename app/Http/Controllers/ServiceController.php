@@ -70,6 +70,7 @@ class ServiceController extends Controller
         $service->experiences=$service->experiences;
         $service->albums=$service->albums;
         $service->itineraries=$service->itineraries;
+        $service->city = $service->partner->city;
         return $this->successResponse($service);
     }
 
