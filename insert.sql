@@ -28,34 +28,22 @@ insert into type_services (name,photo,description,active) values
                           ('Bio Turismo Científico', 'turismoCientifico.jpg', 'Experiencias conectando la ciencia', 1),
                           ('Bio Turismo Rural', 'turismoRural.jpg', 'Experiencias que conecta el pueblo', 1);
 
-insert into type_rooms (name,description,active) values ('Normal', 'sdfsdfsd', 1), ('Especial', 'jasjsjd', 1);
-
-insert into rooms (name,photo,description,active,price,type_room_id, partner_id) values
-                  ('101', '1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 50000, 1, 1),
-                  ('102', '1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 70000, 2, 2),
-                  ('103', '1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 70000, 2, 3);
-
 insert into services (name,description,active,price,photo,partner_id,type_service_id) values
-                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 1, 1),
-                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 2, 2),
-                     ('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 3, 3);
+('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 1, 1),
+('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 2, 2),
+('Caminata', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 2000000, 'caminata.jpg', 3, 3);
+
+insert into experiences (description,active, service_id) values
+                  ('Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 1),
+                  ('Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1, 1),
+                  ('Lorem ipsum dolor sit amet, consectetur adipiscing elit', 0, 1);
 
 insert into sale_service (sale_id,service_id) values
                          (1,1),
                          (2,2),
                          (3,3);
 
-insert into room_service (room_id, service_id) values
-                         (1, 1),
-                         (2, 2),
-                         (3, 3);
-
 insert into album_services (photo,description,service_id) values
-            ('1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1),
-            ('1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 2),
-            ('1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 3);
-
-insert into album_rooms (photo,description,room_id) values
             ('1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 1),
             ('1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 2),
             ('1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 3);
