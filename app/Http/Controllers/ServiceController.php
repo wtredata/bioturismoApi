@@ -67,7 +67,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        $service->rooms=$service->rooms;
+        $service->experiences=$service->experiences;
         $service->albums=$service->albums;
         return $this->successResponse($service);
     }

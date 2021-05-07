@@ -36,8 +36,4 @@ class Partner extends Model
         return $this->hasMany(Service::class);
     }
 
-    public function rooms(){
-        return $this->hasMany(Room::class);
-    }
-
 }

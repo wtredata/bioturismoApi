@@ -37,8 +37,8 @@ class Service extends Model
         return $this->belongsToMany(Sale::class);
     }
 
-    public function rooms(){
-        return $this->belongsToMany(Room::class);
+    public function experiences(){
+        return $this->hasMany(Experience::class);
     }
 
     public function albums(){

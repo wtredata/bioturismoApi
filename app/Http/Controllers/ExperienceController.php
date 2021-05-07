@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TypeRoom;
+use App\Models\Experience;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class TypeRoomController extends Controller
+class ExperienceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,9 @@ class TypeRoomController extends Controller
      */
     public function index()
     {
-        $typeRooms = TypeRoom::all();
+        $experiences = Experience::all();
 
-        return $this->successResponse($typeRooms);
+        return $this->successResponse($experiences);
     }
 
     /**
@@ -38,34 +39,36 @@ class TypeRoomController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required',
+            'description' => 'required',
+            'service_id' => 'required',
         ];
         $this->validate($request, $rules);
 
         $fields = $request->all();
-        $typeRoom = TypeRoom::create($fields);
 
-        return $this->successResponse($typeRoom);
+        $experience = Experience::create($fields);
+
+        return $this->successResponse($experience);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Experience  $experience
      * @return \Illuminate\Http\Response
      */
-    public function show(TypeRoom $typeRoom)
+    public function show(Experience $experience)
     {
-        return $this->successResponse($typeRoom);
+        return $this->successResponse($experience);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Experience  $experience
      * @return \Illuminate\Http\Response
      */
-    public function edit(TypeRoom $typeRoom)
+    public function edit(Experience $experience)
     {
         //
     }
@@ -74,31 +77,31 @@ class TypeRoomController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Experience  $experience
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TypeRoom $typeRoom)
+    public function update(Request $request, Experience $experience)
     {
-        $typeRoom->fill($request->all());
+        $experience->fill($request->all());
 
-        if($typeRoom->isClean()){
+        if($experience->isClean()){
             return response()->json("No se hicieron cambios",422);
         }
 
-        $typeRoom->save();
+        $experience->save();
 
-        return $this->successResponse($typeRoom);
+        return $this->successResponse($experience);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TypeRoom  $typeRoom
+     * @param  \App\Models\Experience  $experience
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeRoom $typeRoom)
+    public function destroy(Experience $experience)
     {
-        $typeRoom->delete();
-        return $this->successResponse($typeRoom);
+        $experience->delete();
+        return $this->successResponse($experience);
     }
 }
