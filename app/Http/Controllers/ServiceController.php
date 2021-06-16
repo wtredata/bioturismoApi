@@ -160,7 +160,7 @@ class ServiceController extends Controller
         
         $services = [];
         if ($request->has('city') && $request->has('typeExperience')) {
-            $services = Service::whereHas('partner', function ($partner) use ($request){
+            $services = Service::with('partner.city')->whereHas('partner', function ($partner) use ($request){
                 $partner->where('city_id', $request->city);
             })
             ->whereHas('typeExperiences', function ($typeExperience) use ($request){
@@ -168,15 +168,18 @@ class ServiceController extends Controller
             })->get();
         } else {
             if ($request->has('city')) {
-                $services = Service::whereHas('partner', function ($partner) use ($request){
+                $services = Service::with('partner.city')->whereHas('partner', function ($partner) use ($request){
                     $partner->where('city_id', $request->city);
                 })->get();
             }
             if ($request->has('typeExperience')) {
-                $services = Service::whereHas('typeExperiences', function ($typeExperience) use ($request){
+                $services = Service::with('partner.city')->whereHas('typeExperiences', function ($typeExperience) use ($request){
                     $typeExperience->where('type_experience_id', $request->typeExperience);
                 })->get();
             }
+        }
+        if (!$request->has('city') && !$request->has('typeExperience')) {
+            $services = Service::with('partner.city')->get();
         }
         return $this->successResponse($services);
     }
