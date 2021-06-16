@@ -50,6 +50,10 @@ class Service extends Model
     public function comments(){
         return $this->hasMany(CommentService::class);
     }
+
+    public function typeExperiences(){
+        return $this->belongsToMany(TypeExperience::class);
+    }
     
     public function itineraries(){
         return $this->hasMany(Itinerary::class);

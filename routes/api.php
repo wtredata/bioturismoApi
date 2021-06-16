@@ -19,6 +19,20 @@ use App\Http\Controllers;
     return $request->user();
 }); */
 
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', 'App\Http\Controllers\AuthController@login');
+    Route::post('signup', 'App\Http\Controllers\AuthController@signUp');
+
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', 'App\Http\Controllers\AuthController@logout');
+        Route::get('user', 'App\Http\Controllers\AuthController@user');
+    });
+});
+
 
 Route::resource('albumService', 'App\Http\Controllers\AlbumServiceController');
 Route::resource('city', 'App\Http\Controllers\CityController');
@@ -33,6 +47,7 @@ Route::resource('stateSale', 'App\Http\Controllers\StateSaleController');
 Route::resource('typeService', 'App\Http\Controllers\TypeServiceController');
 Route::resource('form', 'App\Http\Controllers\FormController');
 Route::resource('itinerary', 'App\Http\Controllers\ItineraryController');
+Route::resource('typeExperience', 'App\Http\Controllers\TypeExperienceController');
 
 /*
  * Custom Routes
@@ -42,3 +57,6 @@ Route::get('service/type/{type}/city/{city}', 'App\Http\Controllers\ServiceContr
 Route::get('city/type/{type}', 'App\Http\Controllers\CityController@city_type');
 Route::get('stateCity/{state}', 'App\Http\Controllers\StateCityController@index');
 Route::get('typeService/{typeService}/services', 'App\Http\Controllers\ServicesTypeservicesController@index');
+Route::post('service/{service}/typeExperience/{typeExperience}', 'App\Http\Controllers\ServiceController@addTypeExperienceInService');
+Route::delete('service/{service}/typeExperience/{typeExperience}', 'App\Http\Controllers\ServiceController@delTypeExperienceInService');
+Route::get('city/typeExperience/services', 'App\Http\Controllers\ServiceController@headerService');

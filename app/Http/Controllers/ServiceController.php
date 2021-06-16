@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Service;
+use App\Models\TypeExperience;
 use App\Models\TypeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -142,6 +143,41 @@ class ServiceController extends Controller
             $item->where('city_id', $city->id);
         })->where('type_service_id', $type->id)->get();
 
+        return $this->successResponse($services);
+    }
+
+    public function addTypeExperienceInService(Service $service, TypeExperience $typeExperience) {
+        $service->typeExperiences()->attach($typeExperience->id);
+        return $this->successResponse($service->typeExperiences);
+    }
+
+    public function delTypeExperienceInService(Service $service, TypeExperience $typeExperience) {
+        $service->typeExperiences()->detach($typeExperience->id);
+        return $this->successResponse($service);
+    }
+
+    public function headerService(Request $request) {
+        
+        $services = [];
+        if ($request->has('city') && $request->has('typeExperience')) {
+            $services = Service::whereHas('partner', function ($partner) use ($request){
+                $partner->where('city_id', $request->city);
+            })
+            ->whereHas('typeExperiences', function ($typeExperience) use ($request){
+                $typeExperience->where('type_experience_id', $request->typeExperience);
+            })->get();
+        } else {
+            if ($request->has('city')) {
+                $services = Service::whereHas('partner', function ($partner) use ($request){
+                    $partner->where('city_id', $request->city);
+                })->get();
+            }
+            if ($request->has('typeExperience')) {
+                $services = Service::whereHas('typeExperiences', function ($typeExperience) use ($request){
+                    $typeExperience->where('type_experience_id', $request->typeExperience);
+                })->get();
+            }
+        }
         return $this->successResponse($services);
     }
 
