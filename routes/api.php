@@ -48,6 +48,8 @@ Route::resource('typeService', 'App\Http\Controllers\TypeServiceController');
 Route::resource('form', 'App\Http\Controllers\FormController');
 Route::resource('itinerary', 'App\Http\Controllers\ItineraryController');
 Route::resource('typeExperience', 'App\Http\Controllers\TypeExperienceController');
+Route::resource('tag', 'App\Http\Controllers\TagController');
+Route::resource('dateExperience', 'App\Http\Controllers\DateExperienceController');
 
 /*
  * Custom Routes
@@ -60,3 +62,8 @@ Route::get('typeService/{typeService}/services', 'App\Http\Controllers\ServicesT
 Route::post('service/{service}/typeExperience/{typeExperience}', 'App\Http\Controllers\ServiceController@addTypeExperienceInService');
 Route::delete('service/{service}/typeExperience/{typeExperience}', 'App\Http\Controllers\ServiceController@delTypeExperienceInService');
 Route::get('city/typeExperience/services', 'App\Http\Controllers\ServiceController@headerService');
+Route::get('tag/{tag}/services', 'App\Http\Controllers\TagController@services');
+Route::post('service/{service}/tag/{tag}', 'App\Http\Controllers\ServiceController@addTagInService');
+Route::delete('service/{service}/tag/{tag}', 'App\Http\Controllers\ServiceController@delTagInService');
+Route::get('serviceRecomended', 'App\Http\Controllers\ServiceController@indexRecommended');
+Route::get('serviceInclusive', 'App\Http\Controllers\ServiceController@indexInclusive');

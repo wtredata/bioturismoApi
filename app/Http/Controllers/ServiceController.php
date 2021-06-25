@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Service;
+use App\Models\Tag;
 use App\Models\TypeExperience;
 use App\Models\TypeService;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
+        $services = Service::with('partner.city')->get();
 
         return $this->successResponse($services);
     }
@@ -72,6 +73,10 @@ class ServiceController extends Controller
         $service->albums=$service->albums;
         $service->itineraries=$service->itineraries;
         $service->city = $service->partner->city;
+        $service->tags = $service->tags;
+        $service->typeExperiences = $service->typeExperiences;
+        $service->typeService = $service->typeService;
+        $service->dateExperience = $service->dateExperience;
         return $this->successResponse($service);
     }
 
@@ -181,6 +186,26 @@ class ServiceController extends Controller
         if (!$request->has('city') && !$request->has('typeExperience')) {
             $services = Service::with('partner.city')->get();
         }
+        return $this->successResponse($services);
+    }
+
+    public function addTagInService(Service $service, Tag $tag) {
+        $service->tags()->attach($tag->id);
+        return $this->successResponse($service->tags);
+    }
+
+    public function delTagInService(Service $service, Tag $tag) {
+        $service->tags()->detach($tag->id);
+        return $this->successResponse($service);
+    }
+
+    public function indexRecommended() {
+        $services = Service::with('partner.city')->where('recommended', true)->get();
+        return $this->successResponse($services);
+    }
+
+    public function indexInclusive() {
+        $services = Service::with('partner.city')->where('inclusive', true)->get();
         return $this->successResponse($services);
     }
 

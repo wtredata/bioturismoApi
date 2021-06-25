@@ -18,6 +18,10 @@ class CreateServicesTable extends Migration
             $table->string("name");
             $table->text("description")->nullable();
             $table->boolean("active")->default(true);
+            $table->boolean("recommended")->default(false);
+            $table->boolean("inclusive")->default(false);
+            $table->integer("quota_max")->default(1);
+            $table->integer("quota_min")->default(1);
             $table->double("price")->default(0);
             $table->string("time")->nullable();
             $table->integer("difficulty")->nullable();

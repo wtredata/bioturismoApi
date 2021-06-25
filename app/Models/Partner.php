@@ -24,6 +24,12 @@ class Partner extends Model
         'city_id',
     ];
 
+    public function getLogoAttribute($valor)
+    {
+        return url('storage/'.$valor);
+    }
+
+
     public function client(){
         return $this->belongsTo(User::class);
     }

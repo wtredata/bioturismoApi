@@ -14,6 +14,10 @@ class Service extends Model
         'name',
         'description',
         'active',
+        'recommended',
+        'inclusive',
+        'quota_max',
+        'quota_min',
         'price',
         'time',
         'difficulty',
@@ -54,7 +58,16 @@ class Service extends Model
     public function typeExperiences(){
         return $this->belongsToMany(TypeExperience::class);
     }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
     
     public function itineraries(){
         return $this->hasMany(Itinerary::class);
-    }}
+    }
+
+    public function dateExperience(){
+        return $this->hasMany(DateExperience::class);
+    }
+}

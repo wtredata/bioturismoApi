@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Partner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PartnerController extends Controller
 {
@@ -45,10 +46,15 @@ class PartnerController extends Controller
             'email' => 'required',
             'user_id' => 'required',
             'city_id' => 'required',
+            'logo' => 'image'
         ];
         $this->validate($request, $rules);
 
-        $fields = $request->all();
+        $fields = $request->except(['logo']);
+
+        if ($request->has('logo')) {
+            $fields['logo'] = $request->logo->store('partner', 'public');
+        }
         $partner = Partner::create($fields);
 
         return $this->successResponse($partner);
@@ -85,7 +91,17 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
-        $partner->fill($request->all());
+        $rules = [
+            'logo' => 'image',
+        ];
+        $this->validate($request, $rules);
+
+        $partner->fill($request->except(['logo']));
+
+        if ($request->has('logo')) {
+            Storage::disk('public')->delete(explode('storage/',$partner->logo)[1]);
+            $partner->logo = $request->logo->store('partner', 'public');
+        }
 
         if($partner->isClean()){
             return response()->json("No se hicieron cambios",422);
@@ -105,6 +121,7 @@ class PartnerController extends Controller
     public function destroy(Partner $partner)
     {
         $partner->delete();
+        Storage::disk('public')->delete(explode('storage/',$partner->logo)[1]);
         return $this->successResponse($partner);
     }
 }
