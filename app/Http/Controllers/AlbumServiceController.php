@@ -39,7 +39,7 @@ class AlbumServiceController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'image' => 'required|image',
+            'photo' => 'required|image',
             'service_id' => 'required',
         ];
         $this->validate($request, $rules);
