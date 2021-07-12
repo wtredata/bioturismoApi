@@ -77,6 +77,7 @@ class ServiceController extends Controller
         $service->typeExperiences = $service->typeExperiences;
         $service->typeService = $service->typeService;
         $service->dateExperience = $service->dateExperience;
+        $service->packages = $service->packages;
         return $this->successResponse($service);
     }
 

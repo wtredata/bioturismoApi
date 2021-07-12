@@ -67,6 +67,10 @@ class Service extends Model
         return $this->hasMany(Itinerary::class);
     }
 
+    public function packages(){
+        return $this->hasMany(Package::class);
+    }
+
     public function dateExperience(){
         return $this->hasMany(DateExperience::class);
     }
