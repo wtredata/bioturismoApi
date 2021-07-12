@@ -32,6 +32,23 @@ Route::group([
         Route::get('user', 'App\Http\Controllers\AuthController@user');
     });
 });
+Route::get('mail/send', 'App\Http\Controllers\MailController@send');
+Route::post('albumService/{albumService}', 'App\Http\Controllers\AlbumServiceController@update');
+Route::post('city/{city}', 'App\Http\Controllers\CityController@update');
+Route::post('commentService/{commentService}', 'App\Http\Controllers\CommentServiceController@update');
+Route::post('group/{group}', 'App\Http\Controllers\GroupController@update');
+Route::post('partner/{partner}', 'App\Http\Controllers\PartnerController@update');
+Route::post('experience/{experience}', 'App\Http\Controllers\ExperienceController@update');
+Route::post('sale/{sale}', 'App\Http\Controllers\SaleController@update');
+Route::post('service/{service}', 'App\Http\Controllers\ServiceController@update');
+Route::post('state/{state}', 'App\Http\Controllers\StateController@update');
+Route::post('stateSale/{stateSale}', 'App\Http\Controllers\StateSaleController@update');
+Route::post('typeService/{typeService}', 'App\Http\Controllers\TypeServiceController@update');
+Route::post('form/{form}', 'App\Http\Controllers\FormController@update');
+Route::post('itinerary/{itinerary}', 'App\Http\Controllers\ItineraryController@update');
+Route::post('typeExperience/{typeExperience}', 'App\Http\Controllers\TypeExperienceController@update');
+Route::post('tag/{tag}', 'App\Http\Controllers\TagController@update');
+Route::post('dateExperience/{dateExperience}', 'App\Http\Controllers\DateExperienceController@update');
 
 
 Route::resource('albumService', 'App\Http\Controllers\AlbumServiceController');
@@ -67,3 +84,13 @@ Route::post('service/{service}/tag/{tag}', 'App\Http\Controllers\ServiceControll
 Route::delete('service/{service}/tag/{tag}', 'App\Http\Controllers\ServiceController@delTagInService');
 Route::get('serviceRecomended', 'App\Http\Controllers\ServiceController@indexRecommended');
 Route::get('serviceInclusive', 'App\Http\Controllers\ServiceController@indexInclusive');
+
+
+//Route::post('service/{service}', 'App\Http\Controllers\ServiceController@update');
+
+Route::post('passwordReset', 'App\Http\Controllers\PasswordResetController@store');
+Route::post('passwordReset/update', 'App\Http\Controllers\PasswordResetController@update');
+
+
+Route::get('dashboard', 'App\Http\Controllers\DashboardController@index');
+
