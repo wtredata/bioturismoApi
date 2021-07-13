@@ -15,7 +15,7 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        $partners = Partner::all();
+        $partners = Partner::with('city')->get();
 
         return $this->successResponse($partners);
     }
@@ -68,6 +68,7 @@ class PartnerController extends Controller
      */
     public function show(Partner $partner)
     {
+        $partner->city = $partner->city;
         return $this->successResponse($partner);
     }
 

@@ -92,5 +92,5 @@ Route::post('passwordReset', 'App\Http\Controllers\PasswordResetController@store
 Route::post('passwordReset/update', 'App\Http\Controllers\PasswordResetController@update');
 
 
-Route::get('dashboard', 'App\Http\Controllers\DashboardController@index');
+Route::get('indicator/{stateSale}', 'App\Http\Controllers\DashboardController@index');
 
