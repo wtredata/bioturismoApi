@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPassword;
 use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class PasswordResetController extends Controller
@@ -37,7 +39,12 @@ class PasswordResetController extends Controller
 
         $passwordReset = PasswordReset::create($fields);
 
-        return $this->successResponse($passwordReset);
+        $objDemo = new \stdClass();
+        $objDemo->token = $token;
+ 
+        Mail::to($request->email)->send(new ResetPassword($objDemo));
+
+        return $this->successResponse('Email enviado');
     }
 
     /**
