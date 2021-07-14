@@ -39,12 +39,13 @@ class TypeServiceController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'photo' => 'required|image',
+            /* 'photo' => 'required|image', */
             'name' => 'required',
         ];
         $this->validate($request, $rules);
         $fields = $request->except(['photo']);
-        $fields['photo'] = $request->photo->store('type_service', 'public');
+        /* $fields['photo'] = $request->photo->store('type_service', 'public'); */
+        $fields['photo'] = '1.jpg';
 
         $typeService = TypeService::create($fields);
 
