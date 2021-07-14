@@ -49,6 +49,7 @@ Route::post('itinerary/{itinerary}', 'App\Http\Controllers\ItineraryController@u
 Route::post('typeExperience/{typeExperience}', 'App\Http\Controllers\TypeExperienceController@update');
 Route::post('tag/{tag}', 'App\Http\Controllers\TagController@update');
 Route::post('dateExperience/{dateExperience}', 'App\Http\Controllers\DateExperienceController@update');
+Route::post('package/{package}', 'App\Http\Controllers\PackageController@update');
 
 
 Route::resource('albumService', 'App\Http\Controllers\AlbumServiceController');
@@ -67,6 +68,7 @@ Route::resource('itinerary', 'App\Http\Controllers\ItineraryController');
 Route::resource('typeExperience', 'App\Http\Controllers\TypeExperienceController');
 Route::resource('tag', 'App\Http\Controllers\TagController');
 Route::resource('dateExperience', 'App\Http\Controllers\DateExperienceController');
+Route::resource('package', 'App\Http\Controllers\PackageController');
 
 /*
  * Custom Routes
