@@ -153,6 +153,9 @@ class ServiceController extends Controller
     }
 
     public function addTypeExperienceInService(Service $service, TypeExperience $typeExperience) {
+        /* $exist = Service::where('id', $service->id)->whereHas('typeExperiences', function($type) use($typeExperience) {
+            $type->where()
+        }); */
         $service->typeExperiences()->attach($typeExperience->id);
         return $this->successResponse($service->typeExperiences);
     }
