@@ -41,12 +41,16 @@ class CityController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'photo' => 'required|image',
+            'photo' => 'image',
             'department_id' => 'required',
         ];
         $this->validate($request, $rules);
         $fields = $request->except(['photo']);
-        $fields['photo'] = $request->photo->store('city', 'public');
+        if ($request->has('photo')) {
+            $fields['photo'] = $request->photo->store('city', 'public');
+        } else {
+            $fields['photo'] = "photo";
+        }
         $city = City::create($fields);
 
         return $this->successResponse($city);
@@ -91,7 +95,9 @@ class CityController extends Controller
         $city->fill($request->except(['photo']));
 
         if ($request->has('photo')) {
-            Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
+            if (explode('storage/',$city->photo)[1] != "photo") {
+                Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
+            }
             $city->photo = $request->photo->store('city', 'public');
         }
 
@@ -113,7 +119,9 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         $city->delete();
-        Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
+        if (explode('storage/',$city->photo)[1] != "photo") {
+            Storage::disk('public')->delete(explode('storage/',$city->photo)[1]);
+        } 
         return $this->successResponse($city);
     }
 
