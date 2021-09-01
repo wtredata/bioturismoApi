@@ -64,17 +64,17 @@ class SaleController extends Controller
     {
         $sale->stateSale = $sale->stateSale;
         $json = json_decode($sale->data_client);
-        if ($json->type_service != null) {
-            $json->type_service_data = TypeService::findOrFail($json->type_service);
+        if ($json["type_service"] != null) {
+            $json["type_service_data"] = TypeService::findOrFail($json["type_service"]);
         }
-        if ($json->experience != null) {
-            $json->experience_data = Experience::findOrFail($json->experience);
+        if ($json["experience"] != null) {
+            $json["experience_data"] = Experience::findOrFail($json["experience"]);
         }
-        if ($json->city_id != null) {
-            $json->city_data = City::findOrFail($json->city_id);
+        if ($json["city_id"] != null) {
+            $json["city_data"] = City::findOrFail($json["city_id"]);
         }
-        if ($json->type_experience != null) {
-            $json->type_experience_data = TypeExperience::findOrFail($json->type_experience);
+        if ($json["type_experience"] != null) {
+            $json["type_experience_data"] = TypeExperience::findOrFail($json["type_experience"]);
         }
         $sale->client = $json;
         return $this->successResponse($sale);
