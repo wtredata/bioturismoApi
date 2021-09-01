@@ -64,6 +64,7 @@ class SaleController extends Controller
     {
         $sale->stateSale = $sale->stateSale;
         $json = json_decode($sale->data_client, true);
+        return $json;
         if ($json->type_service != null) {
             $json["type_service_data"] = TypeService::findOrFail($json["type_service"]);
         }
